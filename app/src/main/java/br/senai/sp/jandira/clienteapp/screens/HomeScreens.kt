@@ -98,7 +98,7 @@ fun BarraDeTiTulo (modifier: Modifier = Modifier) {
     )
 }
 
-@Preview
+//@Preview
 @Composable
 private fun BarraDeTiTuloPreview() {
     BarraDeTiTulo()
@@ -140,7 +140,7 @@ fun BarraDeNavegacao (modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
 private fun BarraDeNavegacaoPreview() {
     BarraDeNavegacao()
@@ -158,7 +158,7 @@ fun BotoaoFlutuante (modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
 private fun BotoaoFlutuantePreview() {
     BotoaoFlutuante()
