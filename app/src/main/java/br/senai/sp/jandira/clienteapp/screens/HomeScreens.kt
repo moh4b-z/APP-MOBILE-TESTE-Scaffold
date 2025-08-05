@@ -55,7 +55,9 @@ fun HomeScreens(modifier: Modifier = Modifier){
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .background(Color.LightGray)
+                .background(
+                    color = MaterialTheme.colorScheme.background
+                )
         ) {
             Text(text = "Conteudo")
         }
@@ -68,11 +70,11 @@ fun BarraDeTiTulo (modifier: Modifier = Modifier) {
     TopAppBar(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(0.dp),
         colors = TopAppBarDefaults
             .topAppBarColors(
                 containerColor = MaterialTheme
-                    .colorScheme.background
+                    .colorScheme.primary
             ),
         title = {
             Row(
@@ -83,11 +85,13 @@ fun BarraDeTiTulo (modifier: Modifier = Modifier) {
                 Column {
                     Text(
                         text = "Texto atoa",
-                        fontSize = 18.sp
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                     Text(
                         text = "email atoa",
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
                 Card(
@@ -114,7 +118,10 @@ private fun BarraDeTiTuloPreview() {
 
 @Composable
 fun BarraDeNavegacao (modifier: Modifier = Modifier) {
-    NavigationBar {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary
+    ) {
         NavigationBarItem(
             selected = false,
             onClick = {},
@@ -131,7 +138,8 @@ fun BarraDeNavegacao (modifier: Modifier = Modifier) {
             icon = {
                 Icon(
                     imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favorite"
+                    contentDescription = "Favorite",
+                    tint = MaterialTheme.colorScheme.onTertiary
                 )
             }
         )
@@ -157,7 +165,8 @@ private fun BarraDeNavegacaoPreview() {
 @Composable
 fun BotoaoFlutuante (modifier: Modifier = Modifier) {
     FloatingActionButton(
-        onClick = {}
+        onClick = {},
+        containerColor = MaterialTheme.colorScheme.tertiary
     ) {
         Icon(
             imageVector = Icons.Default.Add,
