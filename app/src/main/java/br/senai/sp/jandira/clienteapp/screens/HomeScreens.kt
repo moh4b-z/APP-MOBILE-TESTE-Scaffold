@@ -10,8 +10,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -26,15 +35,17 @@ import br.senai.sp.jandira.clienteapp.R
 import br.senai.sp.jandira.clienteapp.ui.theme.ClienteAppTheme
 
 @Composable
-fun HomeSreens(modifier: Modifier = Modifier){
+fun HomeScreens(modifier: Modifier = Modifier){
     Scaffold(
         topBar = {
             BarraDeTiTulo()
         },
         bottomBar = {
-            Text(text = "Barra baixo")
+            BarraDeNavegacao()
         },
-        floatingActionButton = {}
+        floatingActionButton = {
+            BotoaoFlutuante()
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -92,10 +103,71 @@ private fun BarraDeTiTuloPreview() {
     BarraDeTiTulo()
 }
 
+@Composable
+fun BarraDeNavegacao (modifier: Modifier = Modifier) {
+    NavigationBar {
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Home"
+                )
+            }
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorite"
+                )
+            }
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = "Menu"
+                )
+            }
+        )
+    }
+}
+
 @Preview
 @Composable
-private fun HomeSreensPreview(){
+private fun BarraDeNavegacaoPreview() {
+    BarraDeNavegacao()
+}
+
+@Composable
+fun BotoaoFlutuante (modifier: Modifier = Modifier) {
+    FloatingActionButton(
+        onClick = {}
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = "Botão adicionar"
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun BotoaoFlutuantePreview() {
+    BotoaoFlutuante()
+}
+
+
+@Preview
+@Composable
+private fun HomeScreensPreview(){
     ClienteAppTheme {
-        HomeSreens()
+        HomeScreens()
     }
 }
