@@ -6,17 +6,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,6 +35,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -59,10 +66,57 @@ fun HomeScreens(modifier: Modifier = Modifier){
                     color = MaterialTheme.colorScheme.background
                 )
         ) {
-            Text(text = "Conteudo")
+            Row {
+                Icon(
+                    imageVector = Icons.Default.AccountBox,
+                    contentDescription = "Icone",
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = "Lista de clientes"
+                )
+            }
         }
     }
 }
+
+
+@Composable
+fun ClienteCard (modifier: Modifier = Modifier) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp),
+        colors = CardDefaults
+            .cardColors(
+                contentColor =
+            )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(text = "nome")
+                Text(text = "email")
+            }
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "texto"
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ClienteCardPreview() {
+    ClienteCard()
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -128,7 +182,8 @@ fun BarraDeNavegacao (modifier: Modifier = Modifier) {
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
-                    contentDescription = "Home"
+                    contentDescription = "Home",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         )
@@ -139,7 +194,7 @@ fun BarraDeNavegacao (modifier: Modifier = Modifier) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "Favorite",
-                    tint = MaterialTheme.colorScheme.onTertiary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         )
@@ -149,7 +204,8 @@ fun BarraDeNavegacao (modifier: Modifier = Modifier) {
             icon = {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu"
+                    contentDescription = "Menu",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         )
@@ -170,7 +226,8 @@ fun BotoaoFlutuante (modifier: Modifier = Modifier) {
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = "Botão adicionar"
+            contentDescription = "Botão adicionar",
+            tint = MaterialTheme.colorScheme.onTertiary
         )
     }
 }
