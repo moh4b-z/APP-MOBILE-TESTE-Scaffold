@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
@@ -76,6 +77,11 @@ fun HomeScreens(modifier: Modifier = Modifier){
                     text = "Lista de clientes"
                 )
             }
+            LazyColumn {
+                items(10){
+                    ClienteCard()
+                }
+            }
         }
     }
 }
@@ -86,10 +92,15 @@ fun ClienteCard (modifier: Modifier = Modifier) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp),
+            .height(70.dp)
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                bottom = 4.dp
+            ),
         colors = CardDefaults
             .cardColors(
-                contentColor =
+                contentColor = MaterialTheme.colorScheme.primaryContainer
             )
     ) {
         Row(
@@ -100,12 +111,18 @@ fun ClienteCard (modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text(text = "nome")
-                Text(text = "email")
+                Text(
+                    text = "nome",
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+                Text(
+                    text = "email",
+                    color = MaterialTheme.colorScheme.onPrimaryContainer)
             }
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = "texto"
+                contentDescription = "texto",
+                tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
     }
