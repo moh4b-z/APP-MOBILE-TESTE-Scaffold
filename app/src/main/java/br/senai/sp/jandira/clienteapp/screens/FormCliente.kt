@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,7 +63,15 @@ fun FormCliente(modifier: Modifier = Modifier) {
                 )
             },
             supportingText = {
-                Text(text = "Nome é obrigatorio")
+                if(isNomeError){
+                    Text(text = "Nome é obrigatorio")
+                }
+
+            },
+            trailingIcon = {
+                if(isNomeError){
+                    Icon(imageVector = Icons.Default.Info, contentDescription = "erro")
+                }
             },
             isError = isNomeError,
             modifier = Modifier
@@ -77,7 +88,14 @@ fun FormCliente(modifier: Modifier = Modifier) {
                 )
             },
             supportingText = {
-                Text(text = "Email é obrigatorio")
+                if(isEmailError){
+                    Text(text = "Email é obrigatorio")
+                }
+            },
+            trailingIcon = {
+                if(isEmailError){
+                    Icon(imageVector = Icons.Default.Info, contentDescription = "erro")
+                }
             },
             isError = isEmailError,
             modifier = Modifier
