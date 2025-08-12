@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import br.senai.sp.jandira.clienteapp.screens.FormCliente
 import br.senai.sp.jandira.clienteapp.screens.HomeScreens
 import br.senai.sp.jandira.clienteapp.ui.theme.ClienteAppTheme
 
@@ -20,7 +21,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ClienteAppTheme {
-                HomeScreens()
+                //HomeScreens()
+                FormCliente()
             }
         }
     }

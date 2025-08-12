@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
@@ -36,6 +37,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,10 +48,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.clienteapp.R
+import br.senai.sp.jandira.clienteapp.model.Cliente
+import br.senai.sp.jandira.clienteapp.service.RetrofitFactory
 import br.senai.sp.jandira.clienteapp.ui.theme.ClienteAppTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.await
+
 
 @Composable
 fun HomeScreens(modifier: Modifier = Modifier){
+
+    val retrofit = RetrofitFactory().getClienteService()
+
+    //Variavel para amazenar a lista de personagens da API
+    var clienteList by remember {
+        mutableStateOf(listOf<Cliente>())
+    }
+
+    //Fazer uma chamadada na API
+    LaunchedEffect(Dispatchers.IO) {
+        clienteList = retrofit.exibirTodos().await()
+    }
+
     Scaffold(
         topBar = {
             BarraDeTiTulo()
@@ -78,8 +107,11 @@ fun HomeScreens(modifier: Modifier = Modifier){
                 )
             }
             LazyColumn {
-                items(10){
-                    ClienteCard()
+                items(clienteList){
+                    ClienteCard(
+                        nome = it.nome,
+                        email = it.email,
+                    )
                 }
             }
         }
@@ -88,7 +120,11 @@ fun HomeScreens(modifier: Modifier = Modifier){
 
 
 @Composable
-fun ClienteCard (modifier: Modifier = Modifier) {
+fun ClienteCard (
+    id: Long? = null,
+    nome: String = "nome",
+    email: String = "email"
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -112,11 +148,11 @@ fun ClienteCard (modifier: Modifier = Modifier) {
         ) {
             Column {
                 Text(
-                    text = "nome",
+                    text = nome,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text = "email",
+                    text = email,
                     color = MaterialTheme.colorScheme.onPrimaryContainer)
             }
             Icon(
