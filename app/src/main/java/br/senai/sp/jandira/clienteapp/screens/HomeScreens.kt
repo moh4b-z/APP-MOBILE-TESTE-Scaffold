@@ -58,7 +58,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.await
 
 
@@ -126,34 +129,30 @@ fun TelaHome(paddingValues: PaddingValues) {
                 text = "Lista de clientes"
             )
         }
-        LazyColumn {
-            items(clienteList){
+        LazyColumn (
+        ){
+            items(clienteList) { cliente ->
                 ClienteCard(
-                    nome = it.nome,
-                    email = it.email,
+                    cliente = cliente,
+                    onExcluir = {
+                        clienteList = clienteList - cliente
+                    }
                 )
             }
         }
     }
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun ClienteCard (
-    id: Long? = null,
-    nome: String = "nome",
-    email: String = "email"
+    cliente: Cliente,
+    onExcluir: () -> Unit
 ) {
     var mostraTelaDeConfimarExclusao by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
     val retrofit = RetrofitFactory().getClienteService()
-
-    val cliente = Cliente(
-        id,
-        nome,
-        email
-    )
-
 
     Card(
         modifier = Modifier
@@ -178,11 +177,11 @@ fun ClienteCard (
         ) {
             Column {
                 Text(
-                    text = nome,
+                    text = cliente.nome,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text = email,
+                    text = cliente.email,
                     color = MaterialTheme.colorScheme.onPrimaryContainer)
             }
             IconButton(
@@ -211,15 +210,17 @@ fun ClienteCard (
                 },
                 text = {
                     Text(
-                        text = "Quer excluir o cliente ${nome}?"
+                        text = "Quer excluir o cliente ${cliente.nome}?"
                     )
                 },
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            LaunchedEffect(Dispatchers.IO) {
-                                val ClienteExcluido = retrofit.exculir(cliente).await()
+                            GlobalScope.launch(Dispatchers.IO) {
+                                retrofit.exculir(cliente).await()
                             }
+                            onExcluir()
+                            mostraTelaDeConfimarExclusao = false
                         }
                     ) {
                         Text(
@@ -246,11 +247,11 @@ fun ClienteCard (
     }
 }
 
-@Preview
-@Composable
-private fun ClienteCardPreview() {
-    ClienteCard()
-}
+//@Preview
+//@Composable
+//private fun ClienteCardPreview() {
+//    ClienteCard(null)
+//}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
