@@ -88,7 +88,7 @@ fun HomeScreens(modifier: Modifier = Modifier){
                 startDestination = "home"
             ){
                 composable(route = "Home"){ TelaHome(paddingValues) }
-                composable(route = "Form"){ FormCliente() }
+                composable(route = "Form"){ FormCliente(navController) }
             }
 
         }
@@ -178,11 +178,11 @@ fun ClienteCard (
     }
 }
 
-@Preview
-@Composable
-private fun ClienteCardPreview() {
-    ClienteCard()
-}
+//@Preview
+//@Composable
+//private fun ClienteCardPreview() {
+//    ClienteCard()
+//}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -238,7 +238,7 @@ private fun BarraDeTiTuloPreview() {
 }
 
 @Composable
-fun BarraDeNavegacao (modifier: NavHostController = Modifier) {
+fun BarraDeNavegacao(navController: NavHostController) {
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary
@@ -280,15 +280,17 @@ fun BarraDeNavegacao (modifier: NavHostController = Modifier) {
 }
 
 //@Preview
-@Composable
-private fun BarraDeNavegacaoPreview() {
-    BarraDeNavegacao()
-}
+//@Composable
+//private fun BarraDeNavegacaoPreview() {
+//    BarraDeNavegacao(navController)
+//}
 
 @Composable
-fun BotoaoFlutuante(navController: Any?) {
+fun BotoaoFlutuante(navController: NavHostController) {
     FloatingActionButton(
-        onClick = {},
+        onClick = {
+            navController?.navigate("Form")
+        },
         containerColor = MaterialTheme.colorScheme.tertiary
     ) {
         Icon(
@@ -300,10 +302,10 @@ fun BotoaoFlutuante(navController: Any?) {
 }
 
 //@Preview
-@Composable
-private fun BotoaoFlutuantePreview() {
-    BotoaoFlutuante(navController)
-}
+//@Composable
+//private fun BotoaoFlutuantePreview() {
+//    BotoaoFlutuante(navController)
+//}
 
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

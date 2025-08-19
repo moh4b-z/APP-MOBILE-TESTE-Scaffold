@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import br.senai.sp.jandira.clienteapp.model.Cliente
 import br.senai.sp.jandira.clienteapp.service.RetrofitFactory
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 import retrofit2.await
 
 @Composable
-fun FormCliente(modifier: Modifier = Modifier) {
+fun FormCliente(navController: NavHostController) {
     var nomeCliente by remember {
         mutableStateOf("")
     }
@@ -129,8 +130,8 @@ fun FormCliente(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun FormClientePreview() {
-    FormCliente()
-}
+//@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+//@Composable
+//private fun FormClientePreview() {
+//    FormCliente(navController)
+//}
