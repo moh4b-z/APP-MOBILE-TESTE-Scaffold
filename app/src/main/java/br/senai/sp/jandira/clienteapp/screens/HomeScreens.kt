@@ -85,7 +85,7 @@ fun HomeScreens(modifier: Modifier = Modifier){
         ) {
             NavHost(
                 navController = navController,
-                startDestination = "home"
+                startDestination = "Home"
             ){
                 composable(route = "Home"){ TelaHome(paddingValues) }
                 composable(route = "Form"){ FormCliente(navController) }
@@ -238,14 +238,16 @@ private fun BarraDeTiTuloPreview() {
 }
 
 @Composable
-fun BarraDeNavegacao(navController: NavHostController) {
+fun BarraDeNavegacao(navController: NavHostController?) {
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary
     ) {
         NavigationBarItem(
             selected = false,
-            onClick = {},
+            onClick = {
+                navController?.navigate("Home")
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
@@ -286,7 +288,7 @@ fun BarraDeNavegacao(navController: NavHostController) {
 //}
 
 @Composable
-fun BotoaoFlutuante(navController: NavHostController) {
+fun BotoaoFlutuante(navController: NavHostController?) {
     FloatingActionButton(
         onClick = {
             navController?.navigate("Form")
