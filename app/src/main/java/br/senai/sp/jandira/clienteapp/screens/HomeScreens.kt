@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,7 +50,9 @@ import br.senai.sp.jandira.clienteapp.service.RetrofitFactory
 import br.senai.sp.jandira.clienteapp.ui.theme.ClienteAppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.Dispatchers
 import retrofit2.await
@@ -58,17 +61,7 @@ import retrofit2.await
 @Composable
 fun HomeScreens(modifier: Modifier = Modifier){
 
-    val retrofit = RetrofitFactory().getClienteService()
 
-    //Variavel para amazenar a lista de personagens da API
-    var clienteList by remember {
-        mutableStateOf(listOf<Cliente>())
-    }
-
-    //Fazer uma chamadada na API
-    LaunchedEffect(Dispatchers.IO) {
-        clienteList = retrofit.exibirTodos().await()
-    }
    var navController = rememberNavController()
 
     Scaffold(
@@ -76,7 +69,7 @@ fun HomeScreens(modifier: Modifier = Modifier){
             BarraDeTiTulo()
         },
         bottomBar = {
-            BarraDeNavegacao()
+            BarraDeNavegacao(navController)
         },
         floatingActionButton = {
             BotoaoFlutuante(navController)
@@ -90,29 +83,55 @@ fun HomeScreens(modifier: Modifier = Modifier){
                     color = MaterialTheme.colorScheme.background
                 )
         ) {
-            NavHost()
-//            Row {
-//                Icon(
-//                    imageVector = Icons.Default.AccountBox,
-//                    contentDescription = "Icone",
-//                    tint = MaterialTheme.colorScheme.onBackground
-//                )
-//                Text(
-//                    text = "Lista de clientes"
-//                )
-//            }
-//            LazyColumn {
-//                items(clienteList){
-//                    ClienteCard(
-//                        nome = it.nome,
-//                        email = it.email,
-//                    )
-//                }
-//            }
+            NavHost(
+                navController = navController,
+                startDestination = "home"
+            ){
+                composable(route = "Home"){ TelaHome(paddingValues) }
+                composable(route = "Form"){ FormCliente() }
+            }
+
         }
     }
 }
 
+@Composable
+fun TelaHome(paddingValues: PaddingValues) {
+    val retrofit = RetrofitFactory().getClienteService()
+
+    //Variavel para amazenar a lista de personagens da API
+    var clienteList by remember {
+        mutableStateOf(listOf<Cliente>())
+    }
+
+    //Fazer uma chamadada na API
+    LaunchedEffect(Dispatchers.IO) {
+        clienteList = retrofit.exibirTodos().await()
+    }
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+    ){
+        Row {
+            Icon(
+                imageVector = Icons.Default.AccountBox,
+                contentDescription = "Icone",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = "Lista de clientes"
+            )
+        }
+        LazyColumn {
+            items(clienteList){
+                ClienteCard(
+                    nome = it.nome,
+                    email = it.email,
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun ClienteCard (
@@ -219,7 +238,7 @@ private fun BarraDeTiTuloPreview() {
 }
 
 @Composable
-fun BarraDeNavegacao (modifier: Modifier = Modifier) {
+fun BarraDeNavegacao (modifier: NavHostController = Modifier) {
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary
