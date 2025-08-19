@@ -2,6 +2,7 @@ package br.senai.sp.jandira.clienteapp.screens
 
 import android.content.res.Configuration
 import android.util.Patterns
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -137,7 +139,7 @@ fun FormCliente(navController: NavHostController?) {
                     GlobalScope.launch(Dispatchers.IO) {
                         val novoCliente = clienteApi.gravar(cliente).await()
                     }
-                    navController?.navigate("Home")
+                    mostraTelaSucesso = true
                 }else{
                     println("************** Tudo errado")
                 }
@@ -166,14 +168,28 @@ fun FormCliente(navController: NavHostController?) {
                     )
                 },
                 confirmButton = {
-                    Button(
-                        onClick = {}
+                    TextButton(
+                        onClick = {
+                            navController?.navigate("Home")
+                        }
                     ) {
                         Text(
-                            text = "ok"
+                            text = "Voltar"
                         )
                     }
-                }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            mostraTelaSucesso = false
+                        }
+                    ) {
+                        Text(
+                            text = "+ um Cliente"
+                        )
+                    }
+                },
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             )
         }
     }
